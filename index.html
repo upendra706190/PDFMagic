@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFMagic - All PDF Tools You Need</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #ff6b6b;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e8ecff 100%);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #555;
+        }
+        
+        /* Tools Section */
+        .tools-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .tool-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+        
+        .feature-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .feature-content p {
+            color: #666;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #6a5acd 100%);
+            color: white;
+        }
+        
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        .btn-light {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-light:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-magic"></i>
+                    <span>PDFMagic</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div>
+                    <a href="#" class="btn btn-outline">Login</a>
+                    <a href="#" class="btn btn-primary">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Every tool you need to work with PDFs in one place</h1>
+            <p>All the PDF tools you need, at your fingertips. 100% FREE and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.</p>
+            <a href="#tools" class="btn btn-primary">Explore Tools</a>
+        </div>
+    </section>
+    
+    <section class="tools-section" id="tools">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful PDF Tools</h2>
+                <p>All our tools are completely free to use with no watermarks or limitations</p>
+            </div>
+            
+            <div class="tools-grid">
+                <!-- Merge PDF -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3>Merge PDF</h3>
+                    <p>Combine PDFs in the order you want with the easiest PDF merger available.</p>
+                    <a href="merge-pdf.html" class="btn btn-outline">Use Tool</a>
+                </div>
+                
+                <!-- Split PDF -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h3>Split PDF</h3>
+                    <p>Separate one page or a whole set for easy conversion into independent PDF files.</p>
+                    <a href="Split-pdf.html" class="btn btn-outline">Use Tool</a>
+                </div>
+                
+                <!-- Compress PDF -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <h3>Compress PDF</h3>
+                    <p>Reduce file size while optimizing for maximal PDF quality.</p>
+                   <a href="compress-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Edit PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-edit"></i>
+    </div>
+    <h3>Edit PDF</h3>
+    <p>Make changes to your PDF files including text, images, and more.</p>
+    <a href="edit-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- PDF to JPG -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-image"></i>
+    </div>
+    <h3>PDF to JPG</h3>
+    <p>Convert your PDF pages into high-quality JPG images.</p>
+    <a href="pdf-to-jpg.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- JPG to PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-image"></i>
+    </div>
+    <h3>JPG to PDF</h3>
+    <p>Convert your JPG images into high-quality PDF documents.</p>
+    <a href="jpg-to-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+
+                <!-- PDF TO WORD -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                       <i class="fas fa-file-word"></i>
+                    </div>
+                    <h3>PDF TO WORD</h3>
+                    <p>Easily convert your POF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.
+</p>
+              <a href="pdf-to-word.html"
+              class="btn btn-outline">Use Tool</a>
+</div>
+
+<!--  pdf to PowerPoint -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-powerpoint"></i>
+    </div>
+    <h3>PDF TO POWERPOINT </h3>
+    <p>Turm your PDF files into easy to edit PPT and PPTX slideshows
+</p>
+    <a href="pdf-to-powerpoint.html"
+    class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- PDF to Excel -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-excel"></i>
+    </div>
+    <h3>PDF to Excel</h3>
+    <p>Convert your PDF tables and data into editable Excel spreadsheets.</p>
+    <a href="pdf-to-excel.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Word to PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-word"></i>
+    </div>
+    <h3>Word to PDF</h3>
+    <p>Convert your Word documents into high-quality PDF files.</p>
+    <a href="word-to-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- PowerPoint to PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-powerpoint"></i>
+    </div>
+    <h3>PowerPoint to PDF</h3>
+    <p>Convert your PowerPoint presentations into professional PDF files.</p>
+    <a href="powerpoint-to-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Excel to PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-excel"></i>
+    </div>
+    <h3>Excel to PDF</h3>
+    <p>Convert your Excel spreadsheets into high-quality PDF documents.</p>
+    <a href="excel-to-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+
+
+<!-- Sign PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-pen-fancy"></i>
+    </div>
+    <h3>Sign PDF</h3>
+    <p>Add your electronic signature to PDF documents quickly and securely.</p>
+    <a href="sign-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Add Watermark -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-tint"></i>
+    </div>
+    <h3>Add Watermark</h3>
+    <p>Insert custom watermark text or images into your PDF files.</p>
+    <a href="add-watermark.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Rotate PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-sync-alt"></i>
+    </div>
+    <h3>Rotate PDF</h3>
+    <p>Rotate pages in your PDF to the desired orientation.</p>
+    <a href="rotate-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+<!-- HTML to PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-code"></i>
+    </div>
+    <h3>HTML to PDF</h3>
+    <p>Convert HTML content or web pages into high-quality PDF documents.</p>
+    <a href="html-to-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+<!-- Protect PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-lock"></i>
+    </div>
+    <h3>Protect PDF</h3>
+    <p>Add password protection to your PDF files for enhanced security.</p>
+    <a href="protect-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Unlock PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-lock-open"></i>
+    </div>
+    <h3>Unlock PDF</h3>
+    <p>Remove password protection from secured PDF files quickly and safely.</p>
+    <a href="unlock-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Organize PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-th-large"></i>
+    </div>
+    <h3>Organize PDF</h3>
+    <p>Rearrange, delete, or sort pages within your PDF documents.</p>
+    <a href="organize-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- PDF to PDF/A -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-archive"></i>
+    </div>
+    <h3>PDF to PDF/A</h3>
+    <p>Convert standard PDF files into long-term archivable PDF/A format.</p>
+    <a href="pdf-to-pdfa.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Repair PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-tools"></i>
+    </div>
+    <h3>Repair PDF</h3>
+    <p>Fix corrupted or damaged PDF files and recover their content.</p>
+    <a href="repair-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Add Page Numbers -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-sort-numeric-down"></i>
+    </div>
+    <h3>Add Page Numbers</h3>
+    <p>Insert page numbers into your PDF documents easily and accurately.</p>
+    <a href="add-page-numbers.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Scan to PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-camera"></i>
+    </div>
+    <h3>Scan to PDF</h3>
+    <p>Use your device camera or images to scan and create PDF documents.</p>
+    <a href="scan-to-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- OCR PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-eye"></i>
+    </div>
+    <h3>OCR PDF</h3>
+    <p>Recognize and extract text from scanned PDF documents using OCR.</p>
+    <a href="ocr-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Compare PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-file-contract"></i>
+    </div>
+    <h3>Compare PDF</h3>
+    <p>Compare two PDF documents and highlight the differences.</p>
+    <a href="compare-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Redact PDF -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-user-secret"></i>
+    </div>
+    <h3>Redact PDF</h3>
+    <p>Hide or permanently remove sensitive information from your PDF files.</p>
+    <a href="redact-pdf.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Protect Image -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-shield-alt"></i>
+    </div>
+    <h3>Protect Image</h3>
+    <p>Secure your images (JPG, PNG, etc.) with watermarking or encryption.</p>
+    <a href="protect-image.html" class="btn btn-outline">Use Tool</a>
+</div>
+
+<!-- Unlock Image -->
+<div class="tool-card">
+    <div class="tool-icon">
+        <i class="fas fa-unlock-alt"></i>
+    </div>
+    <h3>Unlock Image</h3>
+    <p>Remove restrictions or watermarks from protected image files (JPG, PNG, etc.).</p>
+    <a href="unlock-image.html" class="btn btn-outline">Use Tool</a>
+</div>
