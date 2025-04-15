@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Merge PDF files online quickly and securely. Combine multiple PDFs into a single file with our free and easy-to-use tool." />
+  <meta name="keywords" content="merge PDF, combine PDFs, PDF merger, free PDF tool, online PDF tool" />
+  <meta name="author" content="YourBrandName" />
+  <title>Merge PDF Files Online - Free PDF Merger Tool</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    header, footer {
+      background-color: #3a5bef;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+    main {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    .upload-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    input[type="file"] {
+      margin: 1rem 0;
+    }
+    button {
+      padding: 0.75rem 2rem;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #219150;
+    }
+    .adsense {
+      margin: 2rem 0;
+      text-align: center;
+    }
+    .output {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    #mergedPdfLink {
+      font-weight: bold;
+      color: #2980b9;
+      text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      main {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-file-pdf"></i> Merge PDF Tool</h1>
+    <p>Combine multiple PDF files into one with ease</p>
+  </header>
+  <main>
+    <div class="upload-section">
+      <input type="file" id="pdfFiles" multiple accept="application/pdf" />
+      <br />
+      <button onclick="mergePDFs()"><i class="fas fa-layer-group"></i> Merge PDFs</button>
+    </div><div class="adsense">
+  <!-- Google AdSense -->
+  <ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-app-pub-3362698585547948/3318950404"
+    data-ad-slot="1234567890"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+<div class="output" id="output"></div>
+
+  </main>
+  <footer>
+    &copy; 2025 YourBrandName. All rights reserved.
+  </footer>  <!-- Dynamic functionality using PDFLib (optional for client-side merge) -->  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>  <script>
+    async function mergePDFs() {
+      const files = document.getElementById('pdfFiles').files;
+      if (files.length < 2) {
+        alert("Please select at least two PDF files to merge.");
+        return;
+      }
+
+      const mergedPdf = await PDFLib.PDFDocument.create();
+
+      for (const file of files) {
+        const reader = new FileReader();
+        const result = await new Promise((resolve) => {
+          reader.onload = () => resolve(reader.result);
+          reader.readAsArrayBuffer(file);
+        });
+
+        const pdf = await PDFLib.PDFDocument.load(result);
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach((page) => mergedPdf.addPage(page));
+      }
+
+      const pdfBytes = await mergedPdf.save();
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      document.getElementById('output').innerHTML = `<a id='mergedPdfLink' href='${url}' download='merged.pdf'>Download Merged PDF</a>`;
+    }
+  </script></body>
+</html>
